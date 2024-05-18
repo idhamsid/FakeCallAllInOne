@@ -117,8 +117,6 @@ public class RingtoneAdapter extends RecyclerView.Adapter {
             else
                 ((ViewHolder) holder).menuiv.setVisibility(View.VISIBLE);
             ((ViewHolder) holder).download_btn.setVisibility(View.GONE);
-//            ((ViewHolder) holder).layRingtone.setBackground(ContextCompat.getDrawable(context, R.drawable.gradientdone));
-//            ((ViewHolder) holder).musictitle.setTextColor(ContextCompat.getColor(context, R.color.black));
         }
 
         ((ViewHolder) holder).musictitle.setText(noList.getTitle());
@@ -141,8 +139,6 @@ public class RingtoneAdapter extends RecyclerView.Adapter {
             } catch (Exception ex) {
                 Log.i("adslog", "onClick: err or " + ex.getMessage());
             }
-
-
         });
 
 

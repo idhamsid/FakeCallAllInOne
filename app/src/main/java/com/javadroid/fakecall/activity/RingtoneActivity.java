@@ -3,6 +3,7 @@ package com.javadroid.fakecall.activity;
 import static com.javadroid.fakecall.activity.Main.dirTarget;
 import static com.javadroid.fakecall.activity.RingtoneFrgmnt.itemList;
 import static com.javadroid.fakecall.adapter.ringtone.RingtoneAdapter.download;
+import static com.javadroid.fakecall.config.SettingAll.MAX_LOAD_MP3;
 
 import android.app.Activity;
 import android.app.NotificationChannel;
@@ -14,11 +15,15 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.MediaDrmThrowable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,7 +51,8 @@ import java.io.File;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class RingtoneActivity extends PlayerActivity {
+public class RingtoneActivity extends PlayerActivity implements MediaPlayer.OnCompletionListener,
+        MediaPlayer.OnPreparedListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnErrorListener {
     public static LinearLayout linearlayout;
     ProgressBar progressBar1, progressBar2;
     public static ImageView iv_min_play, iv_music_play, loopBtn;
@@ -57,6 +63,8 @@ public class RingtoneActivity extends PlayerActivity {
     public static Boolean loop = false;
     SeekBar seekbar_music;
     private static int REQUEST_PERMISIION = 2704;
+    long persenEllapsed = 0;
+    long timeElapsed, finalTime, timeRemaining;
 
     public void showLoader() {
         linearlayout.setVisibility(View.GONE);
@@ -146,19 +154,25 @@ public class RingtoneActivity extends PlayerActivity {
 
         final Handler mHandler = new Handler();
         runOnUiThread(new Runnable() {
-
             @Override
             public void run() {
                 if (mp != null) {
                     int mCurrentPosition = mp.getCurrentPosition() / 1000;
                     seekbar_music.setProgress(mCurrentPosition);
-                    long timeElapsed, finalTime, timeRemaining;
                     timeElapsed = mp.getCurrentPosition();
                     finalTime = mp.getDuration();
-                    timeRemaining = finalTime - timeElapsed;
-
                     tv_music_time.setText(String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes((long) timeElapsed), TimeUnit.MILLISECONDS.toSeconds((long) timeElapsed) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) timeElapsed))));
                     tv_music_total_time.setText(String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes((long) finalTime), TimeUnit.MILLISECONDS.toSeconds((long) finalTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) finalTime))));
+                    if (timeElapsed > 0) {
+                        timeRemaining = (finalTime - timeElapsed) / finalTime * 100;
+                        if (tv_music_time.getText().equals(tv_music_total_time.getText())) {
+                            Log.e("adslog----------------", "sama :  ");
+                            currentSong = itemList.get(currentPosition);
+                            mp.reset();
+                            seekbar_music.setProgress(0);
+                            nextSong();
+                        }
+                    }
                 }
                 mHandler.postDelayed(this, 1000);
             }
@@ -177,171 +191,6 @@ public class RingtoneActivity extends PlayerActivity {
     int currentPosition;
     NotificationManager notificationManager;
 
-    public void changeText(final RingtoneModel itemSong, int currentPos, Boolean offline, File offlineFile) {
-        currentPosition = currentPos;
-        // Log.e("adslog", "changeText: " + currentPosition);
-        showLoader();
-//        downloadic.setVisibility(View.VISIBLE);
-//        favbtn.setVisibility(View.VISIBLE);
-
-        backwardic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                prevSong();
-            }
-        });
-        forwardic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nextSong();
-            }
-        });
-        iv_music_play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (iv_music_play.getTag().equals("nosound")) {
-                    Toast.makeText(RingtoneActivity.this, "Please Select A Song First", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (iv_music_play.getTag().equals("playing")) {
-                        mp.pause();
-                        iv_music_play.setTag("notplaying");
-                        iv_music_play.setImageResource(R.drawable.playic);
-                        iv_min_play.setImageResource(R.drawable.playic);
-                    } else {
-                        mp.start();
-                        iv_music_play.setTag("playing");
-                        iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                        iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                        iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                        iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    }
-                }
-            }
-        });
-        loopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (iv_music_play.getTag().equals("playing")) {
-                    if (!loop) {
-                        mp.setLooping(true);
-                        loopBtn.setImageResource(R.drawable.ic_loop_red);
-                        loop = true;
-                    } else {
-                        mp.setLooping(false);
-                        loopBtn.setImageResource(R.drawable.ic_loop);
-                        loop = false;
-                    }
-                }
-            }
-        });
-        iv_min_play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (iv_music_play.getTag().equals("playing")) {
-                    mp.pause();
-                    loopBtn.setVisibility(View.INVISIBLE);
-                    iv_music_play.setTag("notplaying");
-                    iv_music_play.setImageResource(R.drawable.playic);
-                    iv_min_play.setImageResource(R.drawable.playic);
-                } else {
-                    mp.start();
-//                    loopBtn.setVisibility(View.VISIBLE);
-                    iv_music_play.setTag("playing");
-                    iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                    iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                    iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-
-            }
-        });
-
-
-        try {
-            mp.reset();
-            if (!offline) {
-                if (itemSong.getSource().startsWith("http")) mp.setDataSource(itemSong.getSource());
-                else {
-                    AssetFileDescriptor afd = getAssets().openFd(itemSong.getSource());
-//                // Log.i("adslog", "changeText: afd " + afd.getFileDescriptor());
-                    mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                }
-                mp.prepareAsync();
-                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            } else {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
-                    mp.setDataSource(itemSong.getSourceOff33());
-                else
-                    mp.setDataSource(offlineFile.getPath());
-                mp.prepare();
-            }
-
-            callNotif();
-
-            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    mp.start();
-                    hideLoader();
-//                    // Log.i("adslog", "onPrepared: Main mp prepared list");
-                    int maxPos = mp.getDuration() / 1000;
-                    seekbar_music.setMax(maxPos);
-                    iv_music_play.setTag("playing");
-                    iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                    iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                    iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    layoutPlayer.setVisibility(View.VISIBLE);
-                    slidingUpPanelLayout.setPanelHeight(layoutPlayer.getHeight());
-                }
-
-            });
-            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mps) {
-                    // Log.i("adslog", "onCompletion: ");
-                    currentSong = itemList.get(currentPosition);
-                    mp.reset();
-                    seekbar_music.setProgress(0);
-                    nextSong();
-                }
-            });
-        } catch (Exception e) {
-            // Log.e("Started", "Nooo");
-            FirebaseCrashlytics.getInstance().recordException(e);
-            e.printStackTrace();
-        }
-
-
-        tv_min_title.setText(itemSong.getTitle());
-
-        tv_max_title.setText(itemSong.getTitle());
-
-        // CHANGE LOGO OF MUSIC
-//        Glide.with(RingtoneActivity.this)
-//                .load(R.drawable.logo)
-//                .placeholder(R.drawable.logo)
-//                .into(iv_min_song);
-
-//        Glide.with(RingtoneActivity.this)
-//                .load(R.drawable.logo)
-//                .placeholder(R.drawable.logo)
-//                .into(iv_max_song);
-
-
-        downloadic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mp != null) {
-                    download(itemSong,currentPos);
-                }
-            }
-        });
-
-
-    }
 
     private void callNotif() {
         play();
@@ -349,7 +198,7 @@ public class RingtoneActivity extends PlayerActivity {
                 R.drawable.baseline_pause_circle_outline_24, currentPosition, itemList.size() - 1);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();
-            registerReceiver(broadcastReceiver, new IntentFilter("TRACKS_TRACKS"));
+            registerReceiver(broadcastReceiver, new IntentFilter("TRACKS_TRACKS"), RECEIVER_EXPORTED);
             startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
         }
     }
@@ -401,7 +250,115 @@ public class RingtoneActivity extends PlayerActivity {
         }
     };
 
+    public void changeText(final RingtoneModel itemSong, int currentPos, Boolean offline, File offlineFile) {
+        currentPosition = currentPos;
+        hitungError = 0;
+        showLoader();
+        Log.i("adslog", "changeText:  " + mp);
+        try {
+            mp.reset();
+            if (!offline) {
+                Log.w("adslog", ": online start song ");
+                if (itemSong.getSource().startsWith("http")) {
+                    mp.setDataSource(itemSong.getSource());
+                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mp.setOnBufferingUpdateListener(this);
+                    mp.setOnPreparedListener(this);
+                    mp.setOnErrorListener(this);
+                    mp.prepareAsync();
+                } else {
+                    AssetFileDescriptor afd = getAssets().openFd(itemSong.getSource());
+                    mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mp.setOnPreparedListener(this);
+                    mp.prepare();
+                }
+            } else {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
+                    mp.setDataSource(itemSong.getSourceOff33());
+                else
+                    mp.setDataSource(offlineFile.getPath());
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mp.setOnBufferingUpdateListener(this);
+                mp.setOnPreparedListener(this);
+                mp.prepare();
+            }
+            callNotif();
+
+            tv_min_title.setText(itemSong.getTitle());
+            tv_max_title.setText(itemSong.getTitle());
+
+        } catch (Exception e) {
+
+            Log.e("adslog", "Nooo " + e.getMessage());
+            FirebaseCrashlytics.getInstance().recordException(e);
+            e.printStackTrace();
+        }
+
+        tv_max_title.setText(itemSong.getTitle());
+        backwardic.setOnClickListener(v -> prevSong());
+        forwardic.setOnClickListener(v -> nextSong());
+        iv_music_play.setOnClickListener(v -> {
+            if (iv_music_play.getTag().equals("nosound")) {
+                Toast.makeText(RingtoneActivity.this, "Please Select A Song First", Toast.LENGTH_SHORT).show();
+            } else {
+                if (iv_music_play.getTag().equals("playing")) {
+                    mp.pause();
+                    iv_music_play.setTag("notplaying");
+                    iv_music_play.setImageResource(R.drawable.playic);
+                    iv_min_play.setImageResource(R.drawable.playic);
+                } else {
+                    mp.start();
+                    iv_music_play.setTag("playing");
+                    iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+                    iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+                    iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+                    iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+            }
+        });
+        loopBtn.setOnClickListener(v -> {
+            if (iv_music_play.getTag().equals("playing")) {
+                if (!loop) {
+                    mp.setLooping(true);
+                    loopBtn.setImageResource(R.drawable.ic_loop_red);
+                    loop = true;
+                } else {
+                    mp.setLooping(false);
+                    loopBtn.setImageResource(R.drawable.ic_loop);
+                    loop = false;
+                }
+            }
+        });
+        iv_min_play.setOnClickListener(v -> {
+
+            if (iv_music_play.getTag().equals("playing")) {
+                mp.pause();
+                loopBtn.setVisibility(View.INVISIBLE);
+                iv_music_play.setTag("notplaying");
+                iv_music_play.setImageResource(R.drawable.playic);
+                iv_min_play.setImageResource(R.drawable.playic);
+            } else {
+                mp.start();
+//                    loopBtn.setVisibility(View.VISIBLE);
+                iv_music_play.setTag("playing");
+                iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+                iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+                iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+                iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+            }
+
+        });
+        downloadic.setOnClickListener(view -> {
+            if (mp != null) {
+                download(itemSong, currentPos);
+            }
+        });
+
+    }
+
     private void prevSong() {
+        hitungError = 0;
         showLoader();
         // Log.i("adslog", "onClick: back" + itemList.size());
         if (currentPosition > 0)
@@ -418,6 +375,10 @@ public class RingtoneActivity extends PlayerActivity {
             // Log.d("adslog", "onClick: offline " + namaFile.exists());
             if (!namaFile.exists()) {
                 mp.setDataSource(currentSong.getSource());
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mp.setOnBufferingUpdateListener(this);
+                mp.setOnErrorListener(this);
+                mp.setOnPreparedListener(this);
                 mp.prepareAsync();
             } else {
                 // Log.i("adslog", "onClick: call offline " + namaFile.getPath());
@@ -425,39 +386,11 @@ public class RingtoneActivity extends PlayerActivity {
                     mp.setDataSource(currentSong.getSourceOff33());
                 else
                     mp.setDataSource(namaFile.getPath());
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mp.setOnPreparedListener(this);
                 mp.prepare();
             }
             callNotif();
-            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    mp.start();
-                    hideLoader();
-                    int maxPos = mp.getDuration() / 1000;
-
-                    seekbar_music.setMax(maxPos);
-
-                    iv_music_play.setTag("playing");
-                    iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                    iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                    iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    layoutPlayer.setVisibility(View.VISIBLE);
-                    slidingUpPanelLayout.setPanelHeight(layoutPlayer.getHeight());
-                }
-
-            });
-            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mps) {
-                    currentSong = itemList.get(currentPosition);
-                    mp.reset();
-                    seekbar_music.setProgress(0);
-                    nextSong();
-
-                }
-            });
 
         } catch (Exception e) {
             // Log.i("adslog", "onClick: exc " + e.getMessage());
@@ -472,18 +405,18 @@ public class RingtoneActivity extends PlayerActivity {
     }
 
     private void nextSong() {
+        hitungError = 0;
         showLoader();
         if (currentPosition < itemList.size() - 1)
             currentPosition++;
         else
             Toast.makeText(RingtoneActivity.this, "This end of list ringtone !", Toast.LENGTH_SHORT).show();
-        // Log.e("adslog", "onClick: forwawrd " + currentPosition);
         currentSong = itemList.get(currentPosition);
 
         play();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();
-            registerReceiver(broadcastReceiver, new IntentFilter("TRACKS_TRACKS"));
+            registerReceiver(broadcastReceiver, new IntentFilter("TRACKS_TRACKS"), RECEIVER_EXPORTED);
             startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
         }
 
@@ -491,10 +424,13 @@ public class RingtoneActivity extends PlayerActivity {
         try {
             String stringFile = currentSong.getTitle() + currentSong.getSource().substring(currentSong.getSource().lastIndexOf("."));
             File namaFile = new File(dirTarget, stringFile);
-            // Log.d("adslog", "onClick: offline " + namaFile.exists());
+            Log.d("adslog", "onClick: offline " + namaFile.exists());
             if (!namaFile.exists()) {
-                // Log.d("adslog", "onClick: " + currentSong.getSource());
                 mp.setDataSource(currentSong.getSource());
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mp.setOnBufferingUpdateListener(this);
+                mp.setOnErrorListener(this);
+                mp.setOnPreparedListener(this);
                 mp.prepareAsync();
             } else {
                 // Log.i("adslog", "onClick: call offline " + namaFile.getPath());
@@ -502,57 +438,59 @@ public class RingtoneActivity extends PlayerActivity {
                     mp.setDataSource(currentSong.getSourceOff33());
                 else
                     mp.setDataSource(namaFile.getPath());
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mp.setOnBufferingUpdateListener(this);
+                mp.setOnPreparedListener(this);
                 mp.prepare();
             }
-            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
             callNotif();
-            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    mp.start();
-                    hideLoader();
-//                    // Log.i("adslog", "onPrepared: Main mp prepared list");
-                    int maxPos = mp.getDuration() / 1000;
 
-                    seekbar_music.setMax(maxPos);
-
-                    iv_music_play.setTag("playing");
-                    iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                    iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-                    iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    layoutPlayer.setVisibility(View.VISIBLE);
-                    slidingUpPanelLayout.setPanelHeight(layoutPlayer.getHeight());
-                }
-
-            });
-            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mps) {
-                    currentSong = itemList.get(currentPosition);
-                    mp.reset();
-                    seekbar_music.setProgress(0);
-                    if (currentPosition < itemList.size() - 1)
-                        nextSong();
-                    else {
-                        Toast.makeText(RingtoneActivity.this, "This end of list ringtone !", Toast.LENGTH_SHORT).show();
-                        hideLoader();
-                        iv_music_play.setImageResource(R.drawable.baseline_play_circle_outline_24);
-                        iv_min_play.setImageResource(R.drawable.baseline_play_circle_outline_24);
-                        iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                        iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
-                    }
-                }
-            });
+            tv_min_title.setText(currentSong.getTitle());
+            tv_max_title.setText(currentSong.getTitle());
+//            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                @Override
+//                public void onPrepared(MediaPlayer mediaPlayer) {
+//                    mp.start();
+//                    hideLoader();
+////                    // Log.i("adslog", "onPrepared: Main mp prepared list");
+//                    int maxPos = mp.getDuration() / 1000;
+//
+//                    seekbar_music.setMax(maxPos);
+//
+//                    iv_music_play.setTag("playing");
+//                    iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+//                    iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+//                    iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+//                    iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+//                    layoutPlayer.setVisibility(View.VISIBLE);
+//                    slidingUpPanelLayout.setPanelHeight(layoutPlayer.getHeight());
+//                }
+//
+//            });
+//            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                @Override
+//                public void onCompletion(MediaPlayer mps) {
+//                    currentSong = itemList.get(currentPosition);
+//                    mp.reset();
+//                    seekbar_music.setProgress(0);
+//                    if (currentPosition < itemList.size() - 1)
+//                        nextSong();
+//                    else {
+//                        Toast.makeText(RingtoneActivity.this, "This end of list ringtone !", Toast.LENGTH_SHORT).show();
+//                        hideLoader();
+//                        iv_music_play.setImageResource(R.drawable.baseline_play_circle_outline_24);
+//                        iv_min_play.setImageResource(R.drawable.baseline_play_circle_outline_24);
+//                        iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+//                        iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+//                    }
+//                }
+//            });
 
         } catch (Exception e) {
             // Log.i("adslog", "onClick: exc " + e.getMessage());
             FirebaseCrashlytics.getInstance().recordException(e);
             e.printStackTrace();
         }
-
-        tv_min_title.setText(currentSong.getTitle());
-        tv_max_title.setText(currentSong.getTitle());
     }
 
     @Override
@@ -589,4 +527,66 @@ public class RingtoneActivity extends PlayerActivity {
 
     }
 
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        float persenSekarang;
+//        long timeElapsed, finalTime, timeRemaining;
+
+        if (timeElapsed > 0)
+            persenSekarang = (float) timeElapsed / finalTime * 100;
+        else
+            persenSekarang = 0;
+        Log.e("adslog", "persen:  " + percent + " persen sekarang " + persenSekarang);
+        if (percent == 100) {
+            hideLoader();
+        } else if (percent > persenSekarang) {
+            hideLoader();
+        } else {
+            showLoader();
+        }
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        Log.i("adslog", "onCompletion: ");
+        currentSong = itemList.get(currentPosition);
+        mp.reset();
+        seekbar_music.setProgress(0);
+        nextSong();
+    }
+
+    int hitungError = 0;
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        mp.start();
+        hideLoader();
+        Log.i("adslog", "onPrepared: Main mp prepared list");
+        int maxPos = mp.getDuration() / 1000;
+        seekbar_music.setMax(maxPos);
+        iv_music_play.setTag("playing");
+        iv_music_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+        iv_min_play.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+        iv_music_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+        iv_min_play.setColorFilter(ContextCompat.getColor(activity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+        layoutPlayer.setVisibility(View.VISIBLE);
+        slidingUpPanelLayout.setPanelHeight(layoutPlayer.getHeight());
+
+
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+        if (what == -38) {
+            hitungError++;
+            if (hitungError >= MAX_LOAD_MP3){
+                currentSong = itemList.get(currentPosition);
+                mp.reset();
+                seekbar_music.setProgress(0);
+                nextSong();
+            }
+            Log.i("adslog", "onError:  " + hitungError);
+        }
+        return false;
+    }
 }

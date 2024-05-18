@@ -35,7 +35,7 @@ public class CreateNotification {
     public static void createNotification(Context context, RingtoneModel track, int playbutton, int pos, int size) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.i("adslog", "createNotification: ");
+//            Log.i("adslog", "createNotification: ");
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
             MediaSessionCompat mediaSessionCompat = new MediaSessionCompat(context, "tag");
 
