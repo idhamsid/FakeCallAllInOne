@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bahasa Indonesia -->
+    <string name="todo">Tugas</string>
+    <string name="chat">Obrolan</string>
+    <string name="video_call">Panggilan Video</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="keyboard">Keyboard</string>
+    <string name="settings">Pengaturan</string>
+    <string name="setup_message">Papan Ketik Panggilan Palsu belum diaktifkan. Klik OK untuk membuka Pengaturan Bahasa &amp; Input. Anda harus memilih Papan Ketik Sederhana pada papan ketik Anda saat ini untuk menggunakannya</string>
+    <string name="ime_name">Papan Ketik Afghanistan</string>
+    <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
+    <string name="label_go_key">Lanjut</string>
+    <string name="label_next_key">Selanjutnya</string>
+    <string name="label_send_key">Kirim</string>
+    <string name="label_subtype_generic">%s</string>
+    <string name="label_subtype_en_GB">Inggris (GB)</string>
+    <string name="pashto_latin_label">Pashto Latin</string>
+    <string name="pashto_phonetic_label">Pashto Fonemik</string>
+    <string name="settings_name">Pengaturan Papan Ketik Afghanistan</string>
+    <string name="language_selection_title">Bahasa Input</string>
+    <string name="select_language">Pilih Bahasa Input</string>
+    <string name="general_category">Umum</string>
+    <string name="database_name">database.sqlite</string>
+    <string name="en_table_name">en_table</string>
+    <string name="pa_table_name">pa_table</string>
+    <string name="fa_table_name">fa_table</string>
+    <string name="freq_column">frekuensi</string>
+    <string name="word_column">kata</string>
+    <string name="sound">Suara pada tekanan tombol</string>
+    <string name="show_suggestions">Tampilkan saran</string>
+    <string name="enable_in_settings">AKTIFKAN</string>
+    <string name="add_languages">BAHASA</string>
+    <string name="choose_input_method">INPUT</string>
+    <string name="choose_theme">TEMA</string>
+    <string name="dictionaries">Kamus</string>
+    <string name="manage_dictionaries">Kelola Kamus</string>
+    <string name="search_word">Cari Kata</string>
+    <string name="search">Cari</string>
+    <string name="about">Tentang</string>
+    <string name="choose_theme_title">Tema Papan Ketik</string>
+    <string name="test_the_keyboard_here">Uji papan ketik di sini.</string>
+    <string name="search_description">Cari kata dan hapus dari prediksi.</string>
+    <string name="search_hint_toast">Harap masukkan kata untuk pencarian!</string>
+    <string name="no_result">Kata tersebut tidak ada dalam kamus!</string>
+    <string name="about_info"><![CDATA[Papan Ketik Afghanistan adalah solusi lengkap untuk bahasa nasional Afghanistan, baik dalam bahasa Pashto maupun Dari (Farsi), dilengkapi dengan angka dan simbol asli. Aplikasi ini juga memiliki papan ketik bahasa Inggris (huruf, angka & simbol) dan papan ketik Pashto Latin. Papan ketik ini terintegrasi yang memungkinkan pengguna mengetik huruf Pashto, Pashto Latin, Dari (Farsi), atau huruf Inggris dalam aplikasi Android apa pun.
+
+Aplikasi ini dikembangkan berdasarkan rekomendasi dan ulasan yang kami terima pada Papan Ketik Pashto kami, oleh karena itu kami sangat merekomendasikan untuk mengirimkan ulasan Anda untuk membantu kami melayani Anda dengan baik.
+
+Kirim email kepada kami di info@sunzala.com jika Anda memiliki pertanyaan atau masalah.]]></string>
+    <string name="removed_word">Kata tersebut telah dihapus dari kamus!</string>
+    <string name="online">Daring</string>
+    <string name="kontak">Kontak</string>
+    <string name="end_to_end">"Terenkripsi end-to-end"</string>
+    <string name="calling2">Panggilan suara WhatsApp</string>
+    <string name="swipe">Geser ke atas untuk menerima</string>
+    <string name="calling3">Panggilan video WhatsApp</string>
+    <string name="calling4">"Panggilan video Telegram"</string>
+    <string name="calling7">Panggilan suara Telegram</string>
+    <string name="fbstatus">menghubungi Anda di Messenger…</string>
+    <string name="timer_untuk_panggilan">Pengatur waktu panggilan</string>
+    <string name="please_enable_additional_permissions">Aktifkan izin tambahan</string>
+    <string name="you_will_not">Anda tidak akan menerima pemberitahuan saat aplikasi berada di latar belakang jika Anda menonaktifkan izin ini</string>
+    <string name="go_to_settings">Buka pengaturan</string>
+    <string name="message_exit">Apakah Anda yakin ingin keluar dari aplikasi ini?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Batal</string>
+    <string name="wait_a_moment">Tunggu sebentar</string>
+    <string name="wait_2_seconds">Tunggu 2 detik</string>
+    <string name="wait_10_seconds">Tunggu 10 detik</string>
+    <string name="wait_30_seconds">Tunggu 30 detik</string>
+    <string name="wait_1_minute">Tunggu 1 menit</string>
+    <string name="wait_5_minute">Tunggu 5 menit</string>
+    <string name="message_has_not_been_filled">Pesan belum diisi!!!</string>
+    <string name="blank_message">Pesan kosong</string>
+    <string name="the_keyboard_is_active">Papan ketik aktif</string>
+    <string name="please_enable_keyboard">Aktifkan papan ketik.</string>
+    <string name="successful_set_wallpaper">Berhasil Mengatur Wallpaper</string>
+    <string name="there_is_a_mistake">Ada kesalahan.</string>
+    <string name="decline">Tolak</string>
+    <string name="answer">Jawab</string>
+    <string name="enter_message">Masukkan Pesan</string>
+    <string name="kembali">Kembali</string>
+    <string name="stop_video">Hentikan Video</string>
+    <string name="mute">Diamkan</string>
+    <string name="tutup">Tutup</string>
+    <string name="senyapkan">Senyapkan</string>
+    <string name="mulai_video">Mulai Video</string>
+    <string name="pengeras_suara">Pengeras Suara</string>
+    <string name="call_now">Panggil Sekarang</string>
+    <string name="_10_second_call_timer">Timer Panggilan 10 Detik</string>
+    <string name="_30_second_call_timer">Timer Panggilan 30 Detik</string>
+    <string name="_1_minute_call_timert">Timer Panggilan 1 Menit</string>
+    <string name="_5_minute_call_timer">Timer Panggilan 5 Menit</string>
+    <string name="template">Templat</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="facebook">Facebook</string>
+    <string name="telegram">Telegram</string>
+    <string name="language">Bahasa</string>
+    <string name="indonesia">Indonesia</string>
+    <string name="inggris">Inggris</string>
+
+</resources>

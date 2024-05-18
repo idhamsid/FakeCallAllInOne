@@ -1,0 +1,38 @@
+{
+  "list_kontak": [
+    {
+      "id": "1",
+      "nama": "Upin",
+      "gambar": "gambar/upin.jpg",
+      "url_suara": "call_suara/suara.mp3",
+      "url_video": "video"
+    },
+    {
+      "id": "2",
+      "nama": "Ipin",
+      "gambar": "gambar/ipin.jpg",
+      "url_suara": "call_suara/suara.mp3",
+      "url_video": "video"
+    }
+  ],
+  "list_wallpaper": [
+    {
+      "url_image": "gambar/1.jpg"
+    },
+    {
+      "url_image": "gambar/2.jpg"
+    },
+    {
+      "url_image": "gambar/1.jpg"
+    },
+    {
+      "url_image": "gambar/2.jpg"
+    },
+    {
+      "url_image": "gambar/1.jpg"
+    },
+    {
+      "url_image": "gambar/2.jpg"
+    }
+  ]
+}

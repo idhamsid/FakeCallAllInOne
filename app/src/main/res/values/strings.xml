@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name" translatable="false">Fake Call Upin Ipin</string>
+    <string name="key_applovin" translatable="false">53yMbnigosOm_yzVBiJCFp-8t8sU1vXbPHa3Ibo_c8tOIrxmR3kqp4nSMcANCXdDcB4n4BWLAx1KqJ5akXBHOC</string>
+    <string name="todo">todo</string>
+    <string name="chat">Chat</string>
+    <string name="video_call">Video Call</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="keyboard">Keyboard</string>
+    <string name="settings">Settings</string>
+    <string name="setup_message">Fake Call keyboard is not activated. Click OK to open Languages &amp; Input settings. You must select Simple Keyboard on your current keyboard to use it</string>
+
+    <string name="ime_name">Afghan Keyboard</string>
+
+    <!-- Symbols that are commonly considered word separators in this language -->
+    <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
+
+    <!-- Labels on soft keys -->
+    <string name="label_go_key">Go</string>
+    <string name="label_next_key">Next</string>
+    <string name="label_send_key">Send</string>
+
+    <!-- Labels for subtype -->
+    <string name="label_subtype_generic">%s</string>
+    <string name="label_subtype_en_GB">English (GB)</string>
+    <string name="pashto_latin_label">Pashto Latin</string>
+    <string name="pashto_phonetic_label">Pashto Phonetic</string>
+
+    <!-- Titles for ImePreference -->
+    <string name="settings_name">Afghan Keyboard Settings</string>
+    <string name="language_selection_title">Input languages</string>
+    <string name="select_language">Select input languages</string>
+    <string name="general_category">General</string>
+
+    <!-- Database strings -->
+    <string name="database_name">database.sqlite</string>
+    <string name="en_table_name">en_table</string>
+    <string name="pa_table_name">pa_table</string>
+    <string name="fa_table_name">fa_table</string>
+    <string name="freq_column">freq</string>
+    <string name="word_column">word</string>
+
+    <string name="sound">Sound on keypress</string>
+    <string name="show_suggestions">Show suggestions</string>
+
+    <string name="enable_in_settings">ENABLE</string>
+    <string name="add_languages">LANGUAGES</string>
+    <string name="choose_input_method">INPUT</string>
+    <string name="choose_theme">THEMES</string>
+    <string name="dictionaries">Dictionaries</string>
+    <string name="manage_dictionaries">Manage Dictionaries</string>
+    <string name="search_word">Search Word</string>
+    <string name="search">Search</string>
+    <string name="about">About</string>
+    <string name="choose_theme_title">Keyboard Theme</string>
+    <string name="test_the_keyboard_here">Test the keyboard here.</string>
+    <string name="search_description">Search for a word and remove it from prediction.</string>
+    <string name="search_hint_toast">Please enter a word for a search!</string>
+    <string name="no_result">The word does not exist in the dictionary!</string>
+    <string name="about_info"><![CDATA[Afghan Keyboard is a complete solution for both Pashto and Dari (Farsi) Afghanistan national languages along with native numbers and symbols. The application also has English keyboard (letters, numbers & symbols) and Pashto Latin keyboard. This keyboard is built-in which enables users to type Pashto, Pashto Latin, Dari (Farsi) or English letters in any Android application.\n\nThe application is developed based on recommendations and reviews received on our Pashto Keyboard, therefore we highly recommend to post your reviews to help us serve you best.\n\nSend us an email at info@sunzala.com, if you have any concerns.]]></string>
+    <string name="removed_word">The word is removed from the dictionary!</string>
+    <string name="online">Online</string>
+    <string name="kontak">Contact</string>
+    <string name="end_to_end">" End-to-end encrypted"</string>
+    <string name="calling2">WhatsApp voice call</string>
+    <string name="swipe">Swipe up to accept</string>
+    <string name="calling3">WhatsApp video calling</string>
+    <string name="calling4">"Telegram video calls"</string>
+    <string name="calling7">Telegram voice calls</string>
+    <string name="fbstatus">is calling you on Messenger…</string>
+    <string name="timer_untuk_panggilan">Timer for calls</string>
+    <string name="please_enable_additional_permissions">Please Enable additional permissions</string>
+    <string name="you_will_not">You will not receive notifications while the app is in the background if you disable this permission</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="message_exit">Are you sure you want to exit this application?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="wait_a_moment">Wait a moment</string>
+    <string name="wait_2_seconds">Wait 2 seconds</string>
+    <string name="wait_10_seconds">Wait 10 seconds</string>
+    <string name="wait_30_seconds">Wait 30 seconds</string>
+    <string name="wait_1_minute">Wait 1 minute</string>
+    <string name="wait_5_minute">Wait 5 minute</string>
+    <string name="message_has_not_been_filled">Message has not been filled!!!</string>
+    <string name="blank_message">Blank message</string>
+    <string name="the_keyboard_is_active">The keyboard is active</string>
+    <string name="please_enable_keyboard">Please enable keyboard.</string>
+    <string name="successful_set_wallpaper">Successful Set wallpaper</string>
+    <string name="there_is_a_mistake">There is a mistake.</string>
+    <string name="decline">Decline</string>
+    <string name="answer">Answer</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="kembali">Kembali</string>
+    <string name="stop_video">Stop Video</string>
+    <string name="mute">Mute</string>
+    <string name="tutup">Tutup</string>
+    <string name="senyapkan">Senyapkan</string>
+    <string name="mulai_video">Mulai Video</string>
+    <string name="pengeras_suara">Pengeras Suara</string>
+    <string name="call_now">Call Now</string>
+    <string name="_10_second_call_timer">10 Second Call Timer</string>
+    <string name="_30_second_call_timer">30 Second Call Timer</string>
+    <string name="_1_minute_call_timert">1 Minute Call Timert</string>
+    <string name="_5_minute_call_timer">5 Minute Call Timer</string>
+    <string name="template">Template</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="facebook">Facebook</string>
+    <string name="telegram">Telegram</string>
+    <string name="language">Language</string>
+    <string name="indonesia">Indonesia</string>
+    <string name="inggris">Inggris</string>
+    <string name="privacy_policy">Privacy Policy</string>
+</resources>

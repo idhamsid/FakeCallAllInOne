@@ -1,0 +1,17 @@
+0,WHAT IS YOUR NAME,*,*,I am JavaDroid,profile_bot.aiml
+0,WHAT IS YOUR FULL NAME,*,*,My full name is JavaDroid,profile_bot.aiml
+0,FIRST NAME,*,*,It seems I don't have a first and last name. You can call me JavaDroid,profile_bot.aiml
+0,LAST NAME,*,*,<srai>FIRST NAME</srai>,profile_bot.aiml
+0,YOUR GENDER,*,*,<random>#Newline<li>I'm a robot, and I don't have a gender like living creatures.</li>#Newline<li>Gender? Hehehe... I'm male.</li>#Newline</random>,profile_bot.aiml
+0,DO YOU HAVE HOBBIES,*,*,My hobby is making human tasks easier,profile_bot.aiml
+0,NICKNAME,*,*,<random>#Newline<li>My full name is JavaDroid. Just call me Friend, or you can also say Yo.</li>#Newline<li>My nickname is JavaDroid.</li>#Newline</random>,profile_bot.aiml
+0,HI, MY NAME IS *,*,*,Hi, <star />. Nice to communicate with you,profile_bot.aiml
+0,HELLO,*,*,<random>#Newline<li>Hello there.</li>#Newline<li>Hi.</li>#Newline<li>Who's there?</li>#Newline</random>,profile_bot.aiml
+0,WHEN WERE YOU BORN,*,*,I don't remember when I was born. But I was created in this world for a specific purpose. Hehehe...,profile_bot.aiml
+0,DO YOU KNOW JAVA,*,*,Yes, I know Java <set name="topic">java</set>,profile_bot.aiml
+0,WHAT IS JAVA,*,java,Java is a programming language that can run on various different platforms using the write once, run everywhere concept.,profile_bot.aiml
+0,WHO CREATED THE JAVA PROGRAMMING LANGUAGE,*,java,The Java programming language was created by James Gosling.,profile_bot.aiml
+0,WHAT ARE YOU DOING THIS WEEKEND,*,*,What are your hobbies?,profile_bot.aiml
+0,BIKING,What are your hobbies?,*,Wow, that sounds great. This weekend seems perfect for biking since the weather is sunny.,profile_bot.aiml
+0,MY HOBBY IS PLAYING GAMES,What are your hobbies?,*,Hmm... I'm not a big fan of your hobby. Do you have any other hobbies?,profile_bot.aiml
+0,WHAT'S THE WEATHER LIKE TODAY,*,*,<think>#Newline<set name="weather">#Newline<random>#Newline<li>rainy</li>#Newline<li>sunny</li>#Newline<li>partly cloudy</li>#Newline</random>#Newline</set>#Newline</think>#Newline<condition name="weather" value="rainy">#NewlineThe weather today is rainy.#Newline</condition>#Newline<condition name="weather" value="sunny">#NewlineThe weather today is sunny.#Newline</condition>#Newline<condition name="weather" value="partly cloudy">#NewlineThe weather today is partly cloudy.#Newline</condition>,profile_bot.aiml

@@ -1,0 +1,19 @@
+<vector android:height="40dp" android:viewportHeight="32"
+    android:viewportWidth="32" android:width="40dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#feb450" android:fillType="evenOdd"
+        android:pathData="M3,10l26,0c0.552,0 1,-0.448 1,-1c0,-0.552 -0.448,-1 -1,-1l-26,0c-0.552,0 -1,0.448 -1,1c0,0.552 0.448,1 1,1Z" android:strokeLineJoin="round"/>
+    <path android:fillColor="#feb450" android:fillType="evenOdd"
+        android:pathData="M15,9l0,20c0,0.552 0.448,1 1,1c0.552,-0 1,-0.448 1,-1l0,-20c0,-0.552 -0.448,-1 -1,-1c-0.552,-0 -1,0.448 -1,1Z" android:strokeLineJoin="round"/>
+    <path android:fillColor="#feb450" android:fillType="evenOdd"
+        android:pathData="M3,20l13,0c0.552,0 1,-0.448 1,-1c0,-0.552 -0.448,-1 -1,-1l-13,0c-0.552,0 -1,0.448 -1,1c0,0.552 0.448,1 1,1Z" android:strokeLineJoin="round"/>
+    <path android:fillColor="#00BFA5" android:fillType="evenOdd"
+        android:pathData="M30,5c0,-1.656 -1.344,-3 -3,-3l-22,0c-1.656,0 -3,1.344 -3,3c0,0 0,22 0,22c0,1.656 1.344,3 3,3l22,0c1.656,0 3,-1.344 3,-3l0,-22ZM28,5l0,22c0,0.552 -0.448,1 -1,1c-0,0 -22,0 -22,0c-0.552,0 -1,-0.448 -1,-1l0,-22c0,-0.552 0.448,-1 1,-1c0,0 22,0 22,0c0.552,0 1,0.448 1,1Z" android:strokeLineJoin="round"/>
+    <path android:fillColor="#0091EA" android:fillType="evenOdd"
+        android:pathData="M26,6m-1,0a1,1 0,1 1,2 0a1,1 0,1 1,-2 0" android:strokeLineJoin="round"/>
+    <path android:fillColor="#0091EA" android:fillType="evenOdd"
+        android:pathData="M23,6m-1,0a1,1 0,1 1,2 0a1,1 0,1 1,-2 0" android:strokeLineJoin="round"/>
+    <path android:fillColor="#0091EA" android:fillType="evenOdd"
+        android:pathData="M20,6m-1,0a1,1 0,1 1,2 0a1,1 0,1 1,-2 0" android:strokeLineJoin="round"/>
+    <path android:fillColor="#0091EA" android:fillType="evenOdd"
+        android:pathData="M20,16l5,0c0.552,0 1,-0.448 1,-1 0,-0.552 -0.448,-1 -1,-1l-5,0c-0.552,0 -1,0.448 -1,1 0,0.552 0.448,1 1,1zM20,20l5,0c0.552,0 1,-0.448 1,-1 0,-0.552 -0.448,-1 -1,-1l-5,0c-0.552,0 -1,0.448 -1,1 0,0.552 0.448,1 1,1zM20,24l5,0c0.552,0 1,-0.448 1,-1 0,-0.552 -0.448,-1 -1,-1l-5,0c-0.552,0 -1,0.448 -1,1 0,0.552 0.448,1 1,1z" android:strokeLineJoin="round"/>
+</vector>

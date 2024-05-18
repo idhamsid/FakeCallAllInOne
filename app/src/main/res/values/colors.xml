@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2962FF</color>
+    <color name="purple_200">#2962FF</color>
+    <color name="purple_500">#2962FF</color>
+    <color name="purple_700">#2962FF</color>
+    <color name="teal_200">#C51162</color>
+    <color name="teal_700">#C51162</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#D50000</color>
+    <color name="blue">#304FFE</color>
+
+    <!-- Suggested bar colors -->
+    <color name="candidate_normal">#FF000000</color>
+    <color name="candidate_recommended">#e35900</color>
+    <color name="candidate_other">#ff808080</color>
+    <color name="candidate_background">#bbffffff</color>
+
+    <!-- Default theme colors -->
+    <color name="keyboardBackgroundColor">#eaeded</color>
+    <color name="popupBackgroundColor">#c6c6c6</color>
+    <color name="keyPreviewColor">#D5DBDB</color>
+    <color name="keyTextColor">#4B4B4B</color>
+    <color name="PopupKeyTextColor">#757575</color>
+
+    <color name="candidateViewColor">#dbdada</color>
+
+    <color name="colorItemKanan">#80CBC4</color>
+    <color name="colorItemKiri">#CFD8DC</color>
+
+    <color name="chat_company_reply_background_color">#F5F5F5</color>
+</resources>

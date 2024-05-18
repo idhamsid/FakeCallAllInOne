@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/menu_setas"
+        android:title="Set As Ringtone"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_setasnotification"
+        android:title="Set As Notification"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/menu_setasalarm"
+        android:title="Set As Alarm"
+        app:showAsAction="always" />
+
+
+</menu>
